@@ -1,0 +1,581 @@
+﻿@model DataLibrary.ModelView.MEMBERS_ACCOUNT_VIEW
+
+
+<div class="pcoded-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-12">
+                    <div class="page-header-title">
+                        <h5 class="m-b-10">Hello! Administrator</h5>
+                    </div>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Admin_Dashboard", "Home")"><i class="feather icon-home"></i></a></li>
+
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Members")">Members Information Lists</a></li>
+                        <li class="breadcrumb-item"><a href="#!">Profile</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <br />
+
+
+        <div class="row">
+
+            <div class="col-xl-12 col-md-12">
+                <div class="card table-card">
+                    <div class="card-header">
+
+                        <div class="form-row" style="align-items: flex-start;">
+                            <!-- Use flex-start to align all items at the top -->
+                            <div class="form-group col-md-9" style="margin-bottom: 0;float:left">
+                                <h5 style="margin-bottom: 0;">
+                                    Members Profile
+                                    <span id="TxtNo_" style="display:none;">@Model.members_.No_</span>
+                                    <span class="badge" id="TxtStat" style="color:red; font-style:italic;">
+                                        @(string.IsNullOrEmpty(Model.members_.FirstName) ? "New" : "Update")
+                                    </span>
+
+
+                                </h5>
+                                <h3 id="h3FullName">
+                                    @(Model.members_.FirstName != "" ? Model.members_.LastName + ", " + Model.members_.FirstName + " " + Model.members_.MiddleName : "")
+                                </h3>
+
+
+
+                            </div>
+
+
+                            <div class="form-group col-md-2" style="display: flex; align-items: center;">
+
+                                <button type="button" id="showMemberSettings" class="btn btn-icon btn-danger" style="margin-right:10px;"><i class="feather icon-settings"></i></button>
+                                <button type="button" id="OpenBarcode" class="btn btn-icon btn-success" style="margin-right: 10px;">
+                                    <i class="feather icon-printer"></i>
+                                </button>
+
+
+                                <div>
+                                    <label for="validationCustom01" style="font-weight: bold; display: block;">Member ID <br /><span style="color:green">M_ID24_10001</span></label>
+                                    <input type="text" class="form-control" id="MemberID_" style="color: white; background-color: white; display:none; text-align: center; margin-top: 5px;" readonly="true" placeholder="" value="@Model.members_.MemberId" required>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="showBarcode">
+                                <div class="modal-dialog modal-md">
+                                    <div class="modal-content" style="border-radius: 10px;">
+                                        <div class="modal-header" style="background-color: #7fde66;">
+                                            <h3 class="modal-title" id="exampleModalPopoversLabel">MEMBER ID</h3>
+
+                                            @*<button type="button" class="btn-close" style="font-size: 40px; width:30px; height: 30px; padding: 0; line-height: 0;margin-right:2%" data-bs-dismiss="modal"> X </button>*@
+                                            <button type="button" style="font-size: 40px;" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body" style="text-align:center">
+                                            <input type="text" class="form-control" id="MemberIDModal_" readonly="true" placeholder="" value="@Model.members_.MemberId" required>
+                                            @* ADD NOTE HERE THAT PLEASE KEEP THIS BARCODE SAFE FOR YOUR SAFETY PURPOSES *@
+                                            <p style="text-align: left;margin-top:2px;">Keep this barcode safe to protect your personal information.</p>
+                                            <svg id="barcode" style="width:100%;" />
+                                            @* SHOW BARCODE Of the  MemberIDModal_ data here *@
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary" onclick="printBarcode()">Print</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="MemberSettingsModal">
+                                <div class="modal-dialog modal-md">
+                                    <div class="modal-content" style="border-radius: 10px;">
+                                        <div class="modal-header" style="background-color: #7fde66;">
+                                            <h3 class="modal-title" id="exampleModalPopoversLabel">MEMBER SETTINGS</h3>
+
+                                            @*<button type="button" class="btn-close" style="font-size: 40px; width:30px; height: 30px; padding: 0; line-height: 0;margin-right:2%" data-bs-dismiss="modal"> X </button>*@
+                                            <button type="button" style="font-size: 40px;" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+
+
+                                            <div class="form-row">
+
+                                                <div class="col-md-12 mb-4">
+                                                    <label for="validationCustom01">Account Status</label>
+                                                    @Html.DropDownListFor(m => m.acct.AccountStatus, new SelectList(new List<SelectListItem>
+                                                                  {
+                                                                  new SelectListItem { Text = "Select", Value = "" },
+                                                                   new SelectListItem { Text = "ACTIVE", Value = "ACTIVE" },
+                                                                     new SelectListItem { Text = "INACTIVE", Value = "INACTIVE" }
+                                                   }, "Value", "Text", Model.acct.AccountStatus), new { @class = "form-control", id = "AccountStatus" })
+                                                </div>
+
+
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="birthdate">Set Password</label>
+
+
+                                                    @if (string.IsNullOrEmpty(Model.acct.Password))
+                                                    {
+                                                        <input type="text" class="form-control" style="display:none" id="CheckEmptyPassword" value="" placeholder="Password">
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="text" class="form-control" style="display:none" id="CheckEmptyPassword" value="@Model.acct.Password" placeholder="Password">
+                                                    }
+
+
+
+                                                    <input type="password" class="form-control" id="UserPassword" placeholder="Password">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+
+                                            <button type="button" id="SaveStatusUpdate" class="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <hr>
+
+
+
+
+                        <div class="form-row">
+                            <div class="col-md-4 mb-3">
+                                <label for="validationCustom01">First name</label>
+                                <input type="text" class="form-control" id="FirstName_" placeholder="First name" value="@Model.members_.FirstName" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="validationCustom02">Middle name</label>
+                                <input type="text" class="form-control" id="MiddleName_" placeholder="Middle name" value="@Model.members_.MiddleName" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="validationCustom02">Last name</label>
+                                <input type="text" class="form-control" id="LastName_" placeholder="Last name" value="@Model.members_.LastName" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+
+                            <div class="col-md-4 mb-3">
+                                <label for="validationCustom01">Username</label>
+                                <input type="text" class="form-control" id="UserName_" placeholder="Username" value="@Model.members_.UserName" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4 mb-3">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" class="form-control" id="userEmail_" aria-describedby="emailHelp" value="@Model.members_.UserEmail" placeholder="Enter email">
+                                @*<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>*@
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label for="validationTooltipUsername">Phone number</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="validationTooltipUsernamePrepend">+63</span>
+                                    </div>
+                                    <input type="tel" id="PhoneNumber_" class="form-control" value="@Model.members_.PhoneNumber" placeholder="Phone number" maxlength="10" required="" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);">
+                                    <div class="invalid-tooltip">
+                                        Please enter a valid phone number (10 digits).
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+
+
+
+                            @*<div class="form-group col-md-2">
+                <label for="birthdate">Date of Birth</label>
+                <input type="date" id="BirthDate_" value="@Model.BirthDate.ToString("yyyy-MM-dd")" class="form-control">
+            </div>*@
+
+
+                            <div class="form-group col-md-3">
+                                <label for="birthdate">Date of Birth</label>
+                                <input type="date" id="BirthDate_"
+                                       value="@(Model.members_.BirthDate == DateTime.MinValue ? DateTime.Now.ToString("yyyy-MM-dd") : Model.members_.BirthDate.ToString("yyyy-MM-dd"))"
+                                       class="form-control">
+                            </div>
+
+
+
+                            <div class="form-group col-md-3">
+                                <label for="inputState">Nationality</label>
+                                @Html.DropDownListFor(m => m.members_.Nationality, new SelectList(new List<SelectListItem>
+                                {
+                                    new SelectListItem { Text = "Select", Value = "" },
+                                    new SelectListItem { Text = "Filipino", Value = "Filipino" },
+                                    new SelectListItem { Text = "Others", Value = "Others" }
+                                }, "Value", "Text", Model.members_.Nationality), new { @class = "form-control", id = "Nationality_" })
+                            </div>
+
+
+
+                            <div class="form-group col-md-3">
+                                <label for="inputState">Gender</label>
+                                @Html.DropDownListFor(m => m.members_.Gender, new SelectList(new List<SelectListItem>
+                                {
+                                    new SelectListItem { Text = "Select", Value = "" },
+                                    new SelectListItem { Text = "Male", Value = "Male" },
+                                    new SelectListItem { Text = "Female", Value = "Female" }
+                                }, "Value", "Text", Model.members_.Gender), new { @class = "form-control", id = "Gender_" })
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="inputState">Civil Status</label>
+                                @Html.DropDownListFor(m => m.members_.CivilStatus, new SelectList(new List<SelectListItem>
+                                {
+                                    new SelectListItem { Text = "Select", Value = "" },
+                                    new SelectListItem { Text = "Single", Value = "Single" },
+                                    new SelectListItem { Text = "Married", Value = "Married" },
+                                    new SelectListItem { Text = "Widow/er", Value = "Widow/er" },
+                                    new SelectListItem { Text = "Legally Separated", Value = "Legally Separated" },
+                                    new SelectListItem { Text = "Annulled", Value = "Annulled" }
+                                }, "Value", "Text", Model.members_.CivilStatus), new { @class = "form-control", id = "CivilStatus_" })
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+
+
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom04">City</label>
+                                <input type="text" class="form-control" id="City_" placeholder="City" value="@Model.members_.City" required>
+                                <input type="text" class="form-control" style="display:none" id="CityNo_" value="@Model.members_.CityNo" placeholder="Barangay" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid state.
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom05">Barangay</label>
+                                <input type="text" class="form-control" id="Barangay_" placeholder="Barangay" value="@Model.members_.Barangay" required>
+                                <input type="text" class="form-control" style="display:none" value="@Model.members_.BarangayNo" id="BarangayNo" placeholder="Barangay" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid zip.
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label for="validationCustom03">Province</label>
+                                <input type="text" class="form-control" id="Province_" placeholder="Province" readonly="true" value="@Model.members_.Province" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid address.
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 mb-3">
+                                <label for="validationCustom05">Zip Code</label>
+                                <input type="tel" id="ZipCode" class="form-control" placeholder="Zip code" readonly="true" maxlength="4" required="" value="@Model.members_.ZipCode" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);">
+                                <div class="invalid-tooltip">
+                                    Please enter a valid ZIP Code
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid zip.
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <h5 class="mt-1">Employment Details</h5>
+                        <br /> <br />
+                        <div class="form-row">
+
+                            <div class="col-md-2 mb-3">
+                                <label for="validationCustom01">Employee Status</label>
+                                @Html.DropDownListFor(m => m.members_.EmployeeStatus, new SelectList(new List<SelectListItem>
+                                {
+                                    new SelectListItem { Text = "Select", Value = "" },
+                                    new SelectListItem { Text = "ACTIVE", Value = "ACTIVE" },
+                                    new SelectListItem { Text = "INACTIVE", Value = "INACTIVE" }
+                                }, "Value", "Text", Model.members_.EmployeeStatus), new { @class = "form-control", id = "EmployeeStatus_" })
+                            </div>
+
+                            <div class="col-md-2 mb-3">
+                                <label for="birthdate">Date of Membership</label>
+                                <input type="date" id="MembershipDate_"
+                                       value="@(Model.members_.MembershipDate == DateTime.MinValue ? DateTime.Now.ToString("yyyy-MM-dd") : Model.members_.MembershipDate.ToString("yyyy-MM-dd"))"
+                                       class="form-control">
+                            </div>
+
+
+                            <div class="col-md-2 mb-3">
+                                <label for="validationCustom01">Employee number</label>
+                                <div class="input-group">
+
+                                    <input type="tel" id="EmployeeNo_" class="form-control" placeholder="Employee number" value="@Model.members_.EmployeeNo" maxlength="7" required="" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);">
+                                    <div class="invalid-tooltip">
+                                        Please enter a valid phone number.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom01">Employer</label>
+                                <div class="input-group">
+
+                                    <input type="text" class="form-control" id="Employer_" placeholder="Employer" value="@Model.members_.Employer" required>
+                                    <div class="invalid-tooltip">
+                                        Please enter a valid phone number.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom01">Tin number</label>
+                                <div class="input-group">
+
+                                    <input type="tel" id="TINNo_" class="form-control" value="@Model.members_.TINNo" placeholder="TIN number" maxlength="9" required="" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);">
+                                    <div class="invalid-tooltip">
+                                        Please enter a valid phone number.
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom01">Occupation</label>
+                                <input type="text" class="form-control" id="Occupation_" placeholder="Occupation" value="@Model.members_.Occupation" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom01">Highest Educational Attainment</label>
+                                @Html.DropDownListFor(m => m.members_.Education, new SelectList(new List<SelectListItem>
+                                {
+                                    new SelectListItem { Text = "Select", Value = "" },
+                                    new SelectListItem { Text = "ELEMENTARY GRADUATE", Value = "ELEMENTARY GRADUATE" },
+                                    new SelectListItem { Text = "HIGH SCHOOL GRADUATE", Value = "HIGH SCHOOL GRADUATE" },
+                                    new SelectListItem { Text = "COLLEGE GRADUATE", Value = "COLLEGE GRADUATE" },
+                                    new SelectListItem { Text = "ELEMENTARY UNDERGRADUATE", Value = "ELEMENTARY UNDERGRADUATE" },
+                                    new SelectListItem { Text = "HIGH SCHOOL UNDERGRADUATE", Value = "HIGH SCHOOL UNDERGRADUATE" },
+                                    new SelectListItem { Text = "COLLEGE UNDERGRADUATE", Value = "COLLEGE UNDERGRADUATE" }
+                                }, "Value", "Text", Model.members_.Education), new { @class = "form-control", id = "Education_" })
+                            </div>
+
+                            <div class="col-md-2 mb-3">
+                                <label for="validationCustom01">Salary</label>
+                                <input type="tel" id="Salary_" class="form-control" placeholder="Salary" maxlength="10" required="" value="@Model.members_.Salary" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);">
+                                <div class="invalid-tooltip">
+                                    Please enter a valid phone number.
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 mb-4">
+                                <label for="validationCustom01">Other source of income</label>
+                                <input type="text" class="form-control" id="OtherSource_" placeholder="Occupation" value="@Model.members_.OtherSource" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-2 mb-4">
+                                <label for="validationCustom01">No of Dependents</label>
+                                <input type="tel" id="Dependents_" class="form-control" placeholder="No. of dependents" value="@Model.members_.Dependents" maxlength="4" required="" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);">
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-row">
+                            <div class="col-md-4 mb-3">
+                                <label for="validationCustom01">Dependent</label>
+                                <input type="text" class="form-control" id="DependentName_" placeholder="Dependent Name" value="@Model.members_.DependentName" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="validationCustom02">Age</label>
+                                <input type="tel" id="DependentAge_" class="form-control" placeholder="Age" maxlength="4" required="" value="@Model.members_.DependentAge" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);">
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="validationCustom02">Relationship</label>
+                                <input type="text" class="form-control" id="Relationship_" placeholder="Relationship" value="@Model.members_.Relationship" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="card-body">
+                            <button class="btn  btn-primary" style="margin:4px;" id="BtnEmployeeSubmit">Submit form</button>
+                            <button class="btn  btn-warning" style="margin:4px;" id="">Print Preview</button>
+                            <button class="btn  btn-danger" style="margin:4px;" id="BtnSendforRegistration">Send for Registration</button>
+                        </div>
+
+                        <div class="modal fade" id="TransactionModal">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content" style="border-radius: 10px;">
+                                    <div class="modal-header" style="background-color: #7fde66;">
+                                        <h3 class="modal-title" id="exampleModalPopoversLabel">MEMBERS TRANSACTION</h3>
+
+                                        @*<button type="button" class="btn-close" style="font-size: 40px; width:30px; height: 30px; padding: 0; line-height: 0;margin-right:2%" data-bs-dismiss="modal"> X </button>*@
+                                        <button type="button" style="font-size: 40px;" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <label for="staticEmail" class="col-sm-2 col-form-label">FULLNAME:</label>
+                                            <div class="col-sm-6">
+
+                                                <input type="text" readonly="" class="form-control-plaintext" id="FullName_Modal" style="font-weight:bolder">
+                                            </div>
+
+                                            <label for="staticEmail" class="col-sm-1 col-form-label">TIN:</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" readonly="" class="form-control-plaintext text-left" style="font-weight:bolder" value="@Model.members_.TINNo">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="staticEmail" class="col-sm-2 col-form-label">ADDRESS:</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" readonly="" class="form-control-plaintext" id="ADDRESS_Modal" style="font-weight:bolder" value="@Model.members_.Barangay,  @Model.members_.City @Model.members_.Province">
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h6>As payment For:</h6>
+
+
+                                                <div class="form-group row">
+                                                    <label for="inputEmail2" class="col-sm-6 col-form-label text-right" style="font-style:italic">Cash Sales (Membership Fee):</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" id="TxtMembershipFee" placeholder="Membership Fee" value="250">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="TxtSubsription" class="col-sm-6 col-form-label text-right" style="font-style:italic">Subscription Amount:</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" id="TxtSubsription" placeholder="Subscription Amount">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="TxtShares" class="col-sm-6 col-form-label text-right" style="font-style:italic">Share Capital Subscription:</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" id="TxtShares" placeholder="Share Capital">
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group row">
+                                                    <label for="TxtTimeDeposits" class="col-sm-6 col-form-label text-right" style="font-style:italic">Time Deposits:</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" id="TxtTimeDeposits" placeholder="Time Deposits">
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group row" style="display:none">
+                                                    <label for="TxtAccountMerchandise" class="col-sm-6 col-form-label text-right" style="font-style:italic">Accounts-Merchandise:</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" id="TxtAccountMerchandise" placeholder="Account Merchandise">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row" style="display:none">
+                                                    <label for="TxtLoanPrincipal" class="col-sm-6 col-form-label text-right" style="font-style:italic">Loan-Principal:</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" id="TxtLoanPrincipal" placeholder="Loan-Principal">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" style="display:none">
+                                                    <label for="TxtLoanInterest" class="col-sm-6 col-form-label text-right" style="font-style:italic">Loan-Interest:</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" id="TxtLoanInterest" placeholder="Loan-Interest">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row" style="display:none">
+                                                    <label for="TxtPenalty" class="col-sm-6 col-form-label text-right" style="font-style:italic">Penalty:</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" id="TxtPenalty" placeholder="Penalty">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row" style="display:none">
+                                                    <label for="inputEmail8" class="col-sm-3 col-form-label text-right" style="font-style:italic">Others:</label>
+                                                    <div class="col-sm-3">
+                                                        <input type="text" class="form-control" id="inputEmail8" placeholder="Details">
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" id="inputEmail10" placeholder="Others">
+                                                    </div>
+                                                </div>
+
+                                                <hr />
+                                                <div class="form-group row">
+                                                    <label for="TxtTotalRegistration_" class="col-sm-6 col-form-label text-right" style="font-weight:bold;font-size:16px;">Total Amount ₱:</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" id="TxtTotalRegistration_" placeholder="Total Amount">
+                                                    </div>
+                                                </div>
+ 
+
+                                            </div>
+
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+
+                                        <button type="button" id="ProcessTransaction" class="btn btn-primary">POST</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

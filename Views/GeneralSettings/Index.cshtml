@@ -1,0 +1,209 @@
+﻿
+@model DataLibrary.ModelView.GENERALSETTINGSVIEW
+
+
+
+<div class="pcoded-content" style="font-family:Arial">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-12">
+                    <div class="page-header-title">
+                        <h5 class="m-b-10">Hello! Administrator</h5>
+                    </div>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Admin_Dashboard", "Home")"><i class="feather icon-home"></i></a></li>
+
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index", "GeneralSettings")">GENERAL SETTINGS</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    @*<div class="card-header">
+                            <h5>Basic Tabs</h5>
+                        </div>*@
+                    <div class="card-body">
+                        <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link text-uppercase active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-uppercase " id="rate-tab" data-toggle="tab" href="#rate" role="tab" aria-controls="rate" aria-selected="true">RATE ADJUSTMENTS</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-uppercase" id="user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="user" aria-selected="false">USERS CONFIGURATION</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <p class="mb-0">
+                                    Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four
+                                    loko
+                                    farm-to-table
+                                    craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. accusamus tattooed echo park.
+                                </p>
+                            </div>
+
+                            <div class="tab-pane fade " id="rate" role="tabpanel" aria-labelledby="rate-tab">
+
+
+                                <div class="accordion" id="accordionExample">
+                                    <div class="card mb-0">
+                                        <div class="card-header" id="headingOne">
+                                            <h5 class="mb-0"><a href="#!" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed">MEMBERSHIP FEE</a></h5>
+                                        </div>
+                                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample" style="">
+
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <div class="form-row align-items-center">
+                                                        <div class="form-group col-md-4">
+                                                            <label>MEMBERSHIP FEE:</label>
+                                                            <input type="text" class="form-control" readonly="true" placeholder="Text">
+                                                        </div>
+
+                                                        <div class="form-group col-md-4">
+                                                            <label>YEAR:</label>
+                                                            <input type="text" class="form-control" readonly="true" placeholder="Text">
+                                                        </div>
+
+                                                        <div class="form-group col-md-4 text-right" style="margin-top:20px;">
+                                                            <button type="button" class="btn btn-icon btn-warning" data-toggle="modal" data-target="#EditMembershipFee">
+                                                                <i class="feather icon-edit"></i>
+                                                            </button>
+                                                            <button type="button" id="showHistory" class="btn btn-icon btn-success">
+                                                                <i class="feather icon-eye"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="DivHistory" style="display:none">
+                                                        <label style="font-weight:bold"> HISTORY: </label>
+
+                                                        <div class="card-body table-border-style">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-dark">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>#</th>
+                                                                            <th>First Name</th>
+                                                                            <th>Last Name</th>
+                                                                            <th>Username</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>1</td>
+                                                                            <td>Mark</td>
+                                                                            <td>Otto</td>
+                                                                            <td>@@mdo</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>2</td>
+                                                                            <td>Jacob</td>
+                                                                            <td>Thornton</td>
+                                                                            <td>@@fat</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>3</td>
+                                                                            <td>Larry</td>
+                                                                            <td>the Bird</td>
+                                                                            <td>@@twitter</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal fade" id="EditMembershipFee">
+                                                <div class="modal-dialog modal-md">
+                                                    <div class="modal-content" style="border-radius: 10px;">
+                                                        <div class="modal-header" style="background-color: #7fde66;">
+                                                            <h3 class="modal-title" id="exampleModalPopoversLabel">MEMBERSHIP FEE</h3>
+                                                            <button type="button" style="font-size: 40px;" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">×</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="form-group col-md-12">
+                                                                <label>MEMBERSHIP FEE:</label>
+                                                                <input type="text" class="form-control" placeholder="Text" value="GET FROM TABLE">
+                                                            </div>
+
+                                                            <div class="form-group col-md-12">
+                                                                <label>YEAR:</label>
+                                                                <select class="form-control" id="yearDropdown">
+                                                                    <option value="">Select Year</option>
+
+                                                                </select>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="card mb-0">
+                                        <div class="card-header" id="headingTwo">
+                                            <h5 class="mb-0"><a href="#!" class="collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Collapsible Group Item #2</a></h5>
+                                        </div>
+                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample" style="">
+                                            <div class="card-body">
+                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+                                                eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                                                sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore
+                                                sustainable VHS.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="headingThree">
+                                            <h5 class="mb-0"><a href="#!" class="collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Collapsible Group Item #3</a></h5>
+                                        </div>
+                                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample" style="">
+                                            <div class="card-body">
+                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+                                                eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                                                sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore
+                                                sustainable VHS.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="user-tab">
+                                <p class="mb-0">
+                                    Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed
+                                    craft beer,
+                                    iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Lnyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
