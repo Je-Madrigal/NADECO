@@ -119,7 +119,35 @@ namespace DataLibrary
 
             return trc; // Return the single MembershipFee object
         }
+        public string[] GetSeriesNo(string SeriesName)
+        {
+            List<string> setSeries = new List<string>(); // Using List<string> instead of string[] for dynamic size
+            con = new SqlConnection(conString);
+            con.Open();
+            string spName = "SP_SERIESNOS";
+            using (cmd = new SqlCommand(spName, con))
+            {
+                sqlDa = new SqlDataAdapter(cmd);
+                cmd.CommandType = CommandType.StoredProcedure;
 
+                cmd.Parameters.AddWithValue("@SQLExec", "FndAllprCompBU"); // Corrected parameter type
+                cmd.Parameters.AddWithValue("@SeriesName", SeriesName); // Corrected parameter type
+
+                // Removed extra con.Open() here
+
+                SqlDataReader DR1 = cmd.ExecuteReader();
+                if (DR1 != null)
+                {
+                    if (DR1.Read())
+                    {
+                        setSeries.Add(DR1["TransactionCode"].ToString() + DateTime.Now.Year + '-' + DR1["SeriesNo"].ToString());
+                        setSeries.Add(DR1["MaxLen"].ToString());
+                    }
+                }
+            }
+
+            return setSeries.ToArray(); // Convert List<string> to string[]
+        }
         public void InsertRegistration(Transactions trc)
         {
             string[] data = GetSeriesNo("REGISTRATION");
@@ -318,35 +346,7 @@ namespace DataLibrary
             //IUnsert SPNAME
         }
 
-        public string[] GetSeriesNo(string SeriesName)
-        {
-            List<string> setSeries = new List<string>(); // Using List<string> instead of string[] for dynamic size
-            con = new SqlConnection(conString);
-            con.Open();
-            string spName = "SP_SERIESNOS";
-            using (cmd = new SqlCommand(spName, con))
-            {
-                sqlDa = new SqlDataAdapter(cmd);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@SQLExec", "FndAllprCompBU"); // Corrected parameter type
-                cmd.Parameters.AddWithValue("@SeriesName", SeriesName); // Corrected parameter type
-
-                // Removed extra con.Open() here
-
-                SqlDataReader DR1 = cmd.ExecuteReader();
-                if (DR1 != null)
-                {
-                    if (DR1.Read())
-                    {
-                        setSeries.Add(DR1["TransactionCode"].ToString() + DateTime.Now.Year + '-' + DR1["SeriesNo"].ToString());
-                        setSeries.Add(DR1["MaxLen"].ToString());
-                    }
-                }
-            }
-
-            return setSeries.ToArray(); // Convert List<string> to string[]
-        }
+      
 
 
 

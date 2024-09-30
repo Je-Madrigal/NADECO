@@ -1,21 +1,23 @@
-﻿window.onload = function () {
-    var btn = document.getElementById('BtnEmployeeSubmit');
-    var txtStat = document.getElementById('TxtStat');
+﻿$(document).ready(function () {
+    window.onload = function () {
+        var btn = document.getElementById('BtnEmployeeSubmit');
+        var txtStat = document.getElementById('TxtStat');
 
-    if (txtStat && txtStat.innerText === 'Update') {
-        btn.innerText = "Save Changes";
-
-
-
-
-    } else {
-       /* $('#OpenBarcode').hide();*/
-        btn.innerText = "Submit";
-        $(document).ready(function () {
+        if (txtStat && txtStat.innerText === 'Update') {
+            btn.innerText = "Save Changes";
+        } else {
+            btn.innerText = "Submit";
             $('#h3FullName').hide();
-        });
-    }
-};
+        }
+
+
+        //HIDING SEND FOR APPROVAL BUTTOn
+        var Regstatus = document.getElementById('TxtRegStatus');
+        if (Regstatus && Regstatus.innerText.trim() === 'POSTED' || txtStat && txtStat.innerText === 'New') {
+            $("#BtnSendforRegistration").hide();
+        }
+    };
+});
 
 
 

@@ -31,10 +31,7 @@
 
 $('#ProcessTransaction').click(function (e) {
     e.preventDefault(); // Prevents the default action
- 
-    alert($('#TxtTotalRegistration_').val().trim());
-
-
+  
     var MembersFeeData = {
         EntryBy: $('#EntryBy').text(),
         MemberNo: $('#TxtNo_').text().trim(),

@@ -13,6 +13,7 @@ namespace DataLibrary.Models
         public string EntryBy { get; set; }
 
         public string MemberNo { get; set; }
+        public string MemberID { get; set; }
 
         public string MemberName { get; set; }
         public string No_ { get; set; }

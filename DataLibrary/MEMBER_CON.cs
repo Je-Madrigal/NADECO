@@ -119,6 +119,7 @@ namespace DataLibrary
                             members.DependentAge = Convert.ToInt32(rdr["DependentAge"]);
                             members.Relationship = rdr["Relationship"].ToString();
                             members.AccountStatus = rdr["AccountStatus"].ToString();
+                            members.RegistrationStatus = rdr["RegistrationStatus"].ToString();
                             // TCT DETAILS
 
 

@@ -34,6 +34,7 @@
                                 <h5 style="margin-bottom: 0;">
                                     Members Profile
                                     <span id="TxtNo_" style="display:none;">@Model.members_.No_</span>
+                                    <span id="TxtRegStatus" style="display:none;" >@Model.members_.RegistrationStatus</span>
                                     <span class="badge" id="TxtStat" style="color:red; font-style:italic;">
                                         @(string.IsNullOrEmpty(Model.members_.FirstName) ? "New" : "Update")
                                     </span>
