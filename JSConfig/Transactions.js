@@ -20,7 +20,7 @@
         }
     }
 
-    $('input[type="text"]').on('input', function () {
+    $('input[type="number"]').on('input', function () {
         this.value = this.value.replace(/[^0-9.]/g, ''); // Allow only numbers and decimals
         calculateTotal();
         validateShares();
@@ -31,9 +31,16 @@
 
 $('#ProcessTransaction').click(function (e) {
     e.preventDefault(); // Prevents the default action
-  
+
+    if ($('#dateTransact').val() === "") {
+        alert("Date Transact is needed");
+        return false;
+    }
+ 
+
     var MembersFeeData = {
         EntryBy: $('#EntryBy').text(),
+        TransactionDate: $('#dateTransact').val(),
         MemberNo: $('#TxtNo_').text().trim(),
         Total: $('#TxtTotalRegistration_').val().trim(),
         MembershipFee: $('#TxtMembershipFee').val(),

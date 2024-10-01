@@ -2,7 +2,7 @@
     $('#OpenBarcode').click(function (e) {
 
 
-        var memberId = 'M_ID24-10001';
+        var memberId = $('#MemberIDModal_').val();
         JsBarcode("#barcode", memberId, { format: "CODE128" });
 
         $('#showBarcode').modal('show');

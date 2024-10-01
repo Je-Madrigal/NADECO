@@ -58,8 +58,11 @@
     <Compile Include="Models\Transactions.cs" />
     <Compile Include="ModelView\GENERALSETTINGSVIEW.cs" />
     <Compile Include="ModelView\MEMBERS_ACCOUNT_VIEW.cs" />
+    <Compile Include="ModelView\SHARESVIEW.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SHAREHEADER_CON.cs" />
+    <Compile Include="SHARELINE_CON.cs" />
+    <Compile Include="TIMEDEPOSIT_CON.cs" />
     <Compile Include="TRANSACTIONS_CON.cs" />
   </ItemGroup>
   <ItemGroup />

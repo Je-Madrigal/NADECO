@@ -14,7 +14,10 @@ namespace DataLibrary.Models
         public string EntryBy { get; set; }
         public string MemberNo { get; set; }
         public string MemberName { get; set; }
+        public string ORNo { get; set; }
+        public string RefNo { get; set; }
         public string No_ { get; set; }
+        public string Name { get; set; }
         public string Type { get; set; }
         public double Subscription { get; set; }
         public double ShareCapital { get; set; }

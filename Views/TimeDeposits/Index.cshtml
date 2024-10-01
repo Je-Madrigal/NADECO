@@ -1,8 +1,8 @@
 ﻿@using DataLibrary.Models
 
-@model List<Members>
+@model List<TimeDeposits>
 
- 
+
 
 <div class="pcoded-content">
     <!-- [ breadcrumb ] start -->
@@ -16,7 +16,7 @@
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="@Url.Action("Admin_Dashboard", "Home")"><i class="feather icon-home"></i></a></li>
 
-                        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Members")">Members Information Lists</a></li>
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index", "TimeDeposits")">Shares & Contribution Lists</a></li>
                     </ul>
                 </div>
             </div>
@@ -26,8 +26,8 @@
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5>Members Masterlist</h5>
-                        <button class="btn  btn-primary" id="BtnAddNewMember"><i class="feather mr-2 icon-file-plus"></i>Add member</button>
+                        <h5>Shares & Contribution Masterlist</h5>
+                        <button class="btn  btn-primary" id="BtnAddNewDeposits"><i class="feather mr-2 icon-file-plus"></i>Add Deposits</button>
 
                     </div>
 
@@ -36,38 +36,39 @@
                             <table class="myTable table table-striped table-bordered">
                                 <thead>
                                     <tr>
+                            
                                         <th>No</th>
 
-                                        <th>Entry Date</th>
-                                        <th>FullName</th>
+                                        <th>Transaction Date</th>
+                                        <th>MemberName</th>
 
-                                        <th>TIN</th>
-                                        <th>Address</th>
+                                        <th>Deposit</th>
+                                        <th>Interest</th>
 
-                                        <th>Account Status</th>
-                                        <th>Registration Status</th>
+                                        <th>Term</th>
+                                        <th>Total</th>
                                         @* <th>Action</th>*@
                                         @*<th>ImageFileName</th>*@
 
                                     </tr>
                                 </thead>
                                 <tbody style="word-wrap:break-word">
-                                    @foreach (var members in Model)
+                                    @foreach (var deposits in Model)
                                     {
                                         <tr style="text-align: center; vertical-align: middle;">
-                                            <td><a href="@Url.Action("Profile_", "Members", new { No_ = members.No_ })">@members.No_</a></td>
-                                            <td>@members.EntryDate.ToShortDateString()</td>
-                                            <td>@members.FullName</td>
+                                            <td><a href="@Url.Action("Details", "TimeDeposits", new { No_ = deposits.No_ })">@deposits.No_</a></td>
+                                            <td>@deposits.TransactionDate.ToShortDateString()</td>
+                                            <td>@deposits.MemberName</td>
 
-                                            <td>@members.TINNo</td>
-                                            <td>@members.FullAddress</td>
+                                            <td>@deposits.Deposit</td>
+                                            <td>@deposits.Interest</td>
 
-                                            <td>@members.AccountStatus</td>
-                                            <td>@members.RegistrationStatus</td>
+                                            <td>@deposits.Term</td>
+                                            <td>@deposits.Total</td>
                                             <!--<td class="responsive-td" style=" align-items: center;">-->
                                             @*<a href="" onclick="return LoadFile('@Url.Content("~/" + rpt.ImageFileName)')" class="btn btn-outline-danger me-2" style="flex: 1; font-size: smaller; margin: 5px;"><i class="fa fa-eye me-1"></i>VIEW </a>
 
-        <a href="@Url.Content("~/" + rpt.ImageFileName)" target="_blank" class="btn btn-outline-success" style="flex: 1; font-size: smaller;"><i class="fa fa-print me-1"></i>PRINT</a>*@
+                                                <a href="@Url.Content("~/" + rpt.ImageFileName)" target="_blank" class="btn btn-outline-success" style="flex: 1; font-size: smaller;"><i class="fa fa-print me-1"></i>PRINT</a>*@
                                             <!--</td>-->
 
 

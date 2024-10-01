@@ -145,8 +145,8 @@
                             <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Loans</span></a>
                             <ul class="pcoded-submenu">
                                 <li><a href="@Url.Action("Index", "Members")">Member's Information</a></li>
-                                <li><a href="bc_button.html">Shares and Contribution</a></li>
-                                <li><a href="bc_badges.html">Time Deposits</a></li>
+                                <li><a href="@Url.Action("Index", "Shares")">Shares and Contribution</a></li>
+                                <li><a href="@Url.Action("Index", "TimeDeposits")">Time Deposits</a></li>
                                 <li><a href="bc_breadcrumb-pagination.html">Credit Limit</a></li>
                                 <li><a href="bc_card.html">Loan Management</a></li>
                                 <li><a href="bc_collapse.html">Sales and Patronage</a></li>
@@ -343,6 +343,7 @@
 
                                     <span id="EntryBy" class="d-none d-lg-inline-flex">@Session["UserName"] </span>
                                     <span style="display:none"> @Session["Pword"] </span>
+                       
 
                                     @{
                                         var userNo = Session["No_"] as string;

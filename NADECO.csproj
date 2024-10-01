@@ -132,6 +132,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Controllers\SharesController.cs" />
+    <Compile Include="Controllers\TimeDepositsController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Features\LookUpWebService.asmx.cs">
       <DependentUpon>LookUpWebService.asmx</DependentUpon>
@@ -768,6 +770,9 @@
     <Content Include="Views\Members\Profile_.cshtml" />
     <Content Include="Views\GeneralSettings\Index.cshtml" />
     <Content Include="Views\Settings\Index.cshtml" />
+    <Content Include="Views\Shares\Index.cshtml" />
+    <Content Include="Views\TimeDeposits\Index.cshtml" />
+    <Content Include="Views\Shares\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

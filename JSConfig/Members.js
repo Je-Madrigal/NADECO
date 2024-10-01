@@ -19,6 +19,9 @@
     };
 });
 
+ 
+
+
 
 
 $(document).ready(function () {
@@ -43,11 +46,20 @@ $(document).ready(function () {
             alert('Please input FirstName');$('#FirstName_').focus().select();$('#FirstName_').css('border-color', 'red'); // Set border color to red
             return false;
         } else { $('#FirstName_').css('border-color', ''); }     
+
+        
         if ($('#LastName_').val() === "") {
             alert('Please input LastName'); $('#LastName_').focus().select(); $('#LastName_').css('border-color', 'red');
             return false;
         } else {
             $('#LastName_').css('border-color', ''); // Remove border color if not empty
+        }
+
+        if ($('#UserName_').val() === "") {
+            alert('Please input UserName'); $('#UserName_').focus().select(); $('#UserName_').css('border-color', 'red');
+            return false;
+        } else {
+            $('#UserName_').css('border-color', ''); // Remove border color if not empty
         }
  
         if ($('#City_').val() === "") {

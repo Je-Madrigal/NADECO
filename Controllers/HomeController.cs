@@ -41,7 +41,8 @@ namespace NADECO.Controllers
                     Session["Pword"] = validUser.Password;
                     Session["UserName"] = validUser.Username;
                     Session["FullName"] = validUser.Name;
-                    Session["No_"] = validUser.No_;
+                    SetMemberNameInSession(validUser.Name);
+                     Session["No_"] = validUser.No_;
                     // Example value
 
                     return RedirectToAction("Admin_Dashboard", "Home");
@@ -55,6 +56,35 @@ namespace NADECO.Controllers
 
             return View(acct);
         }
+
+        public void SetMemberNameInSession(string name)
+        {
+            // Assuming name is like "DELACRUZ JUAN TAMAD"
+            string fullName = name;
+
+            if (!string.IsNullOrEmpty(fullName))
+            {
+                string[] words = fullName.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                // Ensure we have at least three words
+                string middleName = string.Empty;
+
+                if (words.Length >= 3)
+                {
+                    // Get the middle name (second word)
+                    middleName = words[1]; // JUAN
+                }
+                else if (words.Length == 2)
+                {
+                    // If there are only two words, return the second one
+                    middleName = words[1]; // JUAN
+                }
+
+                // Store the middle name in the session
+                Session["FirstName"] = middleName;
+            }
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]

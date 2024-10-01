@@ -151,7 +151,6 @@ namespace DataLibrary
         public void InsertRegistration(Transactions trc)
         {
             string[] data = GetSeriesNo("REGISTRATION");
-
             trc.No_ = data[0].ToString(); //LC24-0001
 
             using (SqlConnection con = new SqlConnection(conString))
@@ -167,6 +166,7 @@ namespace DataLibrary
                     cmd.Parameters.AddWithValue("@MaxLen", SqlDbType.Int).Value = data[1].ToString();
                     cmd.Parameters.AddWithValue("@SeriesName", SqlDbType.Int).Value = "REGISTRATION";
                     cmd.Parameters.AddWithValue("@EntryBy", SqlDbType.Int).Value = trc.EntryBy;
+                    cmd.Parameters.AddWithValue("@TransactionDate", SqlDbType.Int).Value = trc.TransactionDate;
                     cmd.Parameters.AddWithValue("@No_", SqlDbType.Int).Value = trc.No_;
                     cmd.Parameters.AddWithValue("@Total", SqlDbType.Int).Value = trc.Total;
                     cmd.Parameters.AddWithValue("@MemberNo", SqlDbType.Int).Value = trc.MemberNo;

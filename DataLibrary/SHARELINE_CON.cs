@@ -15,7 +15,7 @@ using System.Reflection;
 
 namespace DataLibrary
 {
-    public class SHAREHEADER_CON
+    public class SHARELINE_CON
     {
         string conString = ConfigurationManager.ConnectionStrings["NADECO"].ConnectionString;
         SqlCommand cmd = new SqlCommand();
@@ -23,56 +23,16 @@ namespace DataLibrary
         SqlDataAdapter sqlDa = new SqlDataAdapter();
 
 
-        public List<Shares> FetchAll()
+        public List<Shares> Filter(string No_)
         {
-
-            List<Shares> shares_ = new List<Shares>();
-
-            con = new SqlConnection(conString);
-
-
-            string spName = "SP_TRN_SHAREHEADER";
-            cmd = new SqlCommand(spName, con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            //SqlDataAdapter sqlDa = new SqlDataAdapter(constring.cmd);
-
-            cmd.Parameters.AddWithValue("@SQLExec", SqlDbType.Int).Value = "FetchAll";
-            con.Open();
-
-            SqlDataReader rdr = cmd.ExecuteReader();
-            while (rdr.Read())
-            {
-                Shares shr = new Shares();
-                shr.Timestamp = Convert.ToInt32(rdr["TimeStamp"]);
-                string x = rdr["TransactionDate"].ToString();
-                if(x != "" && x != null)
-                 {
-                    shr.TransactionDate = DateTime.Parse(rdr["TransactionDate"].ToString());
-                }
-                shr.No_ = rdr["No_"].ToString();
-                shr.MemberName = rdr["MemberName"].ToString();
-                shr.Subscription = Convert.ToDouble(rdr["Subscription"].ToString());
-                shr.ShareCapital = Convert.ToDouble(rdr["ShareCapital"].ToString());
-                shr.Balance = Convert.ToDouble(rdr["Balance"].ToString());
-                shr.Status = rdr["Status"].ToString();
-
-                shares_.Add(shr);
-            }
-            //SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
-            return shares_;
-
-        }
-
-        public Shares Filter(string No_)
-        {
-            Shares shr = null;
+            List<Shares> shrs = new List<Shares>();
 
             try
             {
                 using (SqlConnection con = new SqlConnection(conString))
                 {
                     con.Open();
-                    string spName = "TRN_SHARESHEADER";
+                    string spName = "SP_TRN_SHARELINE";
 
                     using (SqlCommand cmd = new SqlCommand(spName, con))
                     {
@@ -83,7 +43,7 @@ namespace DataLibrary
                         SqlDataReader rdr = cmd.ExecuteReader();
                         while (rdr.Read())
                         {
-                            shr = new Shares();
+                            Shares shr = new Shares();
                             shr.Timestamp = Convert.ToInt32(rdr["TimeStamp"]);
                             string x = rdr["TransactionDate"].ToString();
                             if (x != "" && x != null)
@@ -92,12 +52,16 @@ namespace DataLibrary
                             }
                             shr.No_ = rdr["No_"].ToString();
                             shr.MemberName = rdr["MemberName"].ToString();
-                            shr.Subscription = Convert.ToDouble(rdr["Subscription"].ToString());
+                            shr.RefNo = rdr["RefNo"].ToString();
+                            shr.Name = rdr["Name"].ToString();
+                            shr.Type = rdr["Type"].ToString();
                             shr.ShareCapital = Convert.ToDouble(rdr["ShareCapital"].ToString());
-                            shr.Balance = Convert.ToDouble(rdr["Balance"].ToString());
                             shr.Status = rdr["Status"].ToString();
 
+                            shrs.Add(shr);
                         }
+                        //SqlDataAdapter sqlDa = new SqlDataAdapter(cmd);
+
                     }
                 }
             }
@@ -107,8 +71,9 @@ namespace DataLibrary
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
 
-            return shr; // Return the single MembershipFee object
+            return shrs;
         }
+
 
 
     }

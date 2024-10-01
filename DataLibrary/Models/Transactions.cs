@@ -10,6 +10,7 @@ namespace DataLibrary.Models
     {
         public int Timestamp { get; set; }
         public DateTime EntryDate { get; set; }
+        public DateTime TransactionDate { get; set; }
         public string EntryBy { get; set; }
 
         public string MemberNo { get; set; }

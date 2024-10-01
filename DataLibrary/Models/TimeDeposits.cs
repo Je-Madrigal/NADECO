@@ -16,8 +16,10 @@ namespace DataLibrary.Models
         public string MemberName { get; set; }
         public string No_ { get; set; }
         public string Type { get; set; }
+        public string Term { get; set; }
         public double Deposit { get; set; }
         public double Rate { get; set; }
+        public DateTime DueDate { get; set; }
         public double Interest { get; set; }
         public double Total { get; set; }
         public string Month { get; set; }
